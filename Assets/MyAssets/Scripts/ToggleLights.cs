@@ -12,35 +12,24 @@ public class ToggleLights : MonoBehaviour
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
     }
-    
+
     void OnMouseDown()
     {
-        bool anyLightTurnedOn = false;
-
         foreach (Light light in getLights)
         {
+            if (light == null) continue;
+
             light.enabled = !light.enabled;
 
             if (light.enabled)
-                anyLightTurnedOn = true;
-        }
-
-        if (anyLightTurnedOn)
-        {
-            if (lightOn.Length > 0)
             {
-                int i = Random.Range(0, lightOn.Length);
-                if (lightOn[i] != null)
-                {
-                    audioSource.clip = lightOn[i];
-                    audioSource.loop = true;
-                    audioSource.Play();
-                }
+                if (audioSource == null || lightOn == null || lightOn.Length == 0) continue;
+                int randomIndex = Random.Range(0, lightOn.Length);
+                AudioClip clip = lightOn[randomIndex];
+                if (clip == null) continue;
+                audioSource.PlayOneShot(clip);
             }
-        }
-        else
-        {
-            audioSource.Stop();
+            // no sound when turning off
         }
     }
 }
