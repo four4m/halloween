@@ -29,7 +29,6 @@ public class ToggleLights : MonoBehaviour
                 if (clip == null) continue;
                 audioSource.PlayOneShot(clip);
             }
-            // no sound when turning off
         }
     }
 }
